@@ -24,8 +24,7 @@ let createTask = () => {
     result.innerHTML = " ";
     store.map((item, ind) => {
         return (result.innerHTML += `
-<div id=${ind}>
-    <hr/>
+<div id=${ind} class="border border-4 p-3 w-75 m-auto border-success">
     <span>name: ${item.name}</span>
     <span>age: ${item.age}</span>
     <i class="fa-solid fa-trash fa-2x m-2" onclick="deleteItem(this)"></i>
