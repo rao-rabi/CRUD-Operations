@@ -4,22 +4,26 @@ let age = document.getElementById("age");
 let result = document.getElementById("result");
 let getResult = document.getElementById("get-result");
 
+//store in array
+
 let saveData = () => {
-  console.log("hello", name.value);
-  if (name.value != "" && age.value != "") {
-    store.push({
-      name: name.value,
-      age: age.value,
-    });
-    console.log("store-------------->", store);
-    createTask();
-  }
+    console.log("hello", name.value);
+    if (name.value != "" && age.value != "") {
+        store.push({
+            name: name.value,
+            age: age.value,
+        });
+        console.log("store-------------->", store);
+        createTask();
+    }
 };
 
+// create item or add to list
+
 let createTask = () => {
-  result.innerHTML = " ";
-  store.map((item, ind) => {
-    return (result.innerHTML += `
+    result.innerHTML = " ";
+    store.map((item, ind) => {
+        return (result.innerHTML += `
 <div id=${ind}>
     <hr/>
     <span>name: ${item.name}</span>
@@ -28,36 +32,48 @@ let createTask = () => {
     <i class="fa-regular fa-pen-to-square fa-2x m-2" onclick="updateTask(this)"></i>
     </div>
 `);
-  });
-  resetForm();
+    });
+    resetForm();
 };
 
+//delete item
+
 let deleteItem = (item) => {
-  console.log("item", item.parentElement);
-  item.parentElement.remove();
-  store.splice(item.parentElement.id, 1)
-  console.log("store", store)
-  createTask();
+    console.log("item", item.parentElement);
+    item.parentElement.remove();
+    store.splice(item.parentElement.id, 1)
+    console.log("store", store)
+    createTask();
 }
+
+//reset fields
 
 let resetForm = () => {
-  name.value = "";
-  age.value = "";
-  getResult.innerText = "Create a History";
+    name.value = "";
+    age.value = "";
+    getResult.innerText = "Create a History";
 }
 
+//edit or update
+
 let updateTask = (item) => {
-  // console.log("updateTask", name.value)
-  console.log("item", item.parentElement.id);
-  // console.log("name:", item.parentElement);
+    // console.log("updateTask", name.value)
+    console.log("item", item.parentElement.id);
+    // console.log("name:", item.parentElement);
 
-  let itemId = item.parentElement.id;
-  // store[itemId].name = name.value; 
-  // store[itemId].age = age.value;
-  name.value = store[itemId].name; 
-  age.value = store[itemId].age;
+    let itemId = item.parentElement.id;
 
-  // createTask();
-  // resetForm();
-  getResult.innerText = "Update History";
+    name.value = store[itemId].name;
+    age.value = store[itemId].age;
+
+    getResult.innerText = "Update History";
+
+    getResult.onclick = () => {
+        store[itemId].name = name.value;
+        store[itemId].age = age.value;
+
+        createTask();
+        resetForm();
+    };
+
 }
