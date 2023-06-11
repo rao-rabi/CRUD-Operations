@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRUD Operation</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <h1 class="text-center">CRUD Operation</h1>
+  <div class="d-flex m-auto border">
+    <div class="d-flex m-auto">
+      <input type="text" id="name" />
+      <input type="number" id="age" />
+      <button type="submit" id="get-result" onclick="saveData()">Create a History</button>
+    </div>
+  </div>
+  <div>
+    <div id="result" class="border m-1"></div>
+  </div>
+
+  <script>
+    let store = [];
+    let name = document.getElementById("name");
+    let age = document.getElementById("age");
+    let result = document.getElementById("result");
+    let getResult = document.getElementById("get-result");
+
+    let saveData = () => {
+      console.log("hello", name.value);
+      if (name.value != "" && age.value != "") {
+        store.push({
+          name: name.value,
+          age: age.value,
+        });
+        console.log("store-------------->", store);
+        createTask();
+      }
+    };
+
+    let createTask = () => {
+      result.innerHTML = " ";
+      store.map((item, ind) => {
+        return (result.innerHTML += `
+    <div id=${ind}>
+        <hr/>
+        <span>name: ${item.name}</span>
+        <span>age: ${item.age}</span>
+        <i class="fa-solid fa-trash fa-2x m-2" onclick="deleteItem(this)"></i>
+        <i class="fa-regular fa-pen-to-square fa-2x m-2" onclick="updateTask(this)"></i>
+        </div>
+    `);
+      });
+      resetForm();
+    };
+
+    let deleteItem = (item) => {
+      console.log("item", item.parentElement);
+      item.parentElement.remove();
+      store.splice(item.parentElement.id, 1)
+      console.log("store", store)
+      createTask();
+    }
+
+    let resetForm = () => {
+      name.value = "";
+      age.value = "";
+      getResult.innerText = "Create a History";
+    }
+
+    let updateTask = (item) => {
+      // console.log("updateTask", name.value)
+      console.log("item", item.parentElement.id);
+      // console.log("name:", item.parentElement);
+
+      let itemId = item.parentElement.id;
+      // store[itemId].name = name.value; 
+      // store[itemId].age = age.value;
+      name.value = store[itemId].name; 
+      age.value = store[itemId].age;
+
+      // createTask();
+      // resetForm();
+      getResult.innerText = "Update History";
+    }
+
+  </script>
+</body>
+
+</html>
