@@ -73,6 +73,6 @@ let updateTask = (item) => {
 
         createTask();
         resetForm();
+        getResult.onclick = saveData;
     };
-
 }
